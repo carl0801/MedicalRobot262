@@ -1,35 +1,37 @@
 
-import Jaco2_erobot
 import swift as swift
-from Simulation_MQTT import MqttClient
 import sys
 import asyncio
 import numpy as np
+import Jaco2_erobot
+import Simulation_MQTT
+
+emty = {}
 
 
 current_theta_topics = [
-            "P2/AAU/CURRENT/theta1",
-            "P2/AAU/CURRENT/theta2",
-            "P2/AAU/CURRENT/theta3",
-            "P2/AAU/CURRENT/theta4",
-            "P2/AAU/CURRENT/theta5",
-            "P2/AAU/CURRENT/theta6",
-            "P2/AAU/CURRENT/finger1",
-            "P2/AAU/CURRENT/finger2",
-            "P2/AAU/CURRENT/finger3",
+            "P2/AAU/current/theta1",
+            "P2/AAU/current/theta2",
+            "P2/AAU/current/theta3",
+            "P2/AAU/current/theta4",
+            "P2/AAU/current/theta5",
+            "P2/AAU/current/theta6",
+            "P2/AAU/current/finger1",
+            "P2/AAU/current/finger2",
+            "P2/AAU/current/finger3",
             ]
 simulation_topics = [
-            "P2/AAU/Simulation/theta1",
-            "P2/AAU/Simulation/theta2",
-            "P2/AAU/Simulation/theta3",
-            "P2/AAU/Simulation/theta4",
-            "P2/AAU/Simulation/theta5",
-            "P2/AAU/Simulation/theta6"]
+            "P2/AAU/simulation/theta1",
+            "P2/AAU/simulation/theta2",
+            "P2/AAU/simulation/theta3",
+            "P2/AAU/simulation/theta4",
+            "P2/AAU/simulation/theta5",
+            "P2/AAU/simulation/theta6"]
 
 
 print("Building enviroment...")
 #Init server
-mqtt_client = MqttClient()
+mqtt_client = Simulation_MQTT.MqttClient()
 
 #Init simulation enviroment
 env = swift.Swift()
@@ -54,7 +56,7 @@ real_robot = env.add(robot_real)
 simulation_robot = env.add(robot_simulation, robot_alpha=0.4)
 
 #Trajectory values between trajectory visualized 
-traj = 2
+traj = 1
 
 #Time step in seconds for update of the the graphical scene
 try:
@@ -104,7 +106,7 @@ while True:
                 traj_visual = Jaco2_erobot.KinovaJaco2()
                 traj_visual.q = robot_simulation.q
                 env.add(traj_visual, robot_alpha=0.2)
-                traj = 2
+                traj = 1
             else:
                 traj = traj-1
 
