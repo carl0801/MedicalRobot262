@@ -1,2 +1,2 @@
 # MedicalRobot262
-The robot for cutting citronmåne!
+This Github provides code that can simulate and control the Kinova Jaco2 Robot
