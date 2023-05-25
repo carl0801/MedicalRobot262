@@ -1,0 +1,11 @@
+Her er en liste over hvad du skal fortage dig når du har fået denne fil
+
+1. Efter du har pakkede mig ud fra det farlige sted som folk kalder for zip.
+skal du åbne mig som en folder i VS code.
+
+2. her efter skal du køre mit python program jeg anbefalder man gør det igennem terminal da
+jeg har haft erfaring med at det i gennem VS code nogle gange driller.
+
+3. når du har kørt mig i terminal vil der komme en ip adresse frem i lige efter du har kørt mig
+denne ip adresse skal du ctrl + RMB for at åbne op til min hjemme side hvor fra du kan påbegynde
+din operationer med JACO 2
