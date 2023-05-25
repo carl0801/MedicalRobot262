@@ -6,27 +6,23 @@ dk.setup_module()
 
 
 def step(q0, Td, We, k):
+    # Implementation of LM algorithm from paper by Corke and Haviland:
+    # See: https://arxiv.org/pdf/2207.01796.pdf
+    # page numbers and equations refer to this paper.
     
     Te = dk.fkine(q0)
     
     e = ef.angle_axis(Te, Td)
     # quadratic error E:
-    E = (0.5 * e) @ We @ e
-    
+    E = (0.5 * e) @ We @ e # p. 9, equation (44)
 
-    # # Sugihara's method
-    # Wn = E * np.eye(q.shape[-1]) + k * np.eye(q.shape[-1])
-
-    # # Wampler's method
-    # Wn = k * np.eye(q.shape[-1])
-
-    # Chan's method
-    Wn = k * E * np.eye(q0.shape[-1])
+    # Setting damping matrix using Chan's method
+    Wn = k * E * np.eye(q0.shape[-1]) # p. 10, equation (50)
 
     J = dk.jacob0(q0)
-    g = J.T @ We @ e
+    g = J.T @ We @ e # p. 9, equation (47)
     
-    q0 += np.linalg.inv(J.T @ We @ J + Wn) @ g
+    q0 += np.linalg.inv(J.T @ We @ J + Wn) @ g # p. 9, equation (48) and (49)
 
     return q0, E
 
@@ -37,7 +33,7 @@ def ik_simple(
         q = None,       # matrix of joint angles, each row corresponds to a pose. If None, random values are used.
         ilim = 30,      # maximum number of iterations
         slim = 100,     # maximum number of searches
-        tol = 1e-6,     # tolerance on error norm
+        tol = 1e-7,     # tolerance on error norm
         qlim = [1],     # joint limits
         we=1.0,         # weight for orientation error
         k=0.1,          # gain for Chan's method (0.1 recommended by P.Corke and default)
@@ -97,9 +93,12 @@ def ik_simple(
         
 
     # If nothing has been returned, the search has failed
-    print("Failed to converge, search limit and iteration limit reached.")
     raise Exception("Failed to converge, search limit and iteration limit reached.")
     
+
+
+    
+
 
 
     
